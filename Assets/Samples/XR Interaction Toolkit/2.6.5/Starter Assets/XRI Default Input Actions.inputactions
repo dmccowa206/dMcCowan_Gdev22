@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "XRI Default Input Actions",
     "maps": [
         {
@@ -687,7 +688,7 @@
                     "name": "Select",
                     "type": "Button",
                     "id": "33754c03-48ec-46ef-9bc6-22ed6bfdd8e8",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1033,7 +1034,7 @@
                     "name": "",
                     "id": "95fa1419-ca7b-4c8a-8d15-7d46e58d82e3",
                     "path": "<XRController>{LeftHand}/{Primary2DAxis}",
-                    "interactions": "Sector(directions=-1,sweepBehavior=3)",
+                    "interactions": "Sector(directions=1,sweepBehavior=3)",
                     "processors": "",
                     "groups": "Noncontinuous Move",
                     "action": "Teleport Select",
@@ -1829,7 +1830,7 @@
                     "name": "",
                     "id": "919c4a6c-22ed-4083-8e14-f30e91ff59fe",
                     "path": "<XRController>{RightHand}/{Primary2DAxis}",
-                    "interactions": "Sector(directions=-1,sweepBehavior=3)",
+                    "interactions": "Sector(directions=1,sweepBehavior=3)",
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Teleport Select",
