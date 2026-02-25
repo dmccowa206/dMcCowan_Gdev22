@@ -4,14 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
+using UnityEngine.UI;
 
 public class CombinationLock : MonoBehaviour
 {
     [SerializeField] TMP_Text userInputTxt;
     [SerializeField] XRButtonInteractable[] comboBtns;
+    [SerializeField] Image lockedPanel;
+    [SerializeField] Color unlockedColor;
+    [SerializeField] TMP_Text lockedText;
+    private const string unlockedText = "Unlocked";
+    [SerializeField] bool isLocked;
+    [SerializeField] int[] comboValues = new int[3];
+    [SerializeField] int[] inputValues;
+    private int maxBtnPresses, btnPresses;
     void Start()
     {
-        userInputTxt.text = "";
+        maxBtnPresses = comboValues.Length;
+        ResetUserValues();
+        // inputValues = new int[comboValues.Length];
+        // userInputTxt.text = "";
         for (int i = 0; i < comboBtns.Length; i++)
         {
             comboBtns[i].selectEntered.AddListener(OnComboButtonPressed);
@@ -20,16 +32,58 @@ public class CombinationLock : MonoBehaviour
 
     private void OnComboButtonPressed(SelectEnterEventArgs arg0)
     {
-        for (int i = 0; i < comboBtns.Length; i++)
+        if (btnPresses >= maxBtnPresses)
         {
-            if (arg0.interactableObject.transform.name == comboBtns[i].transform.name)
+            //Too many button presses
+        }
+        else
+        {
+            for (int i = 0; i < comboBtns.Length; i++)
             {
-                userInputTxt.text = i.ToString();
+                if (arg0.interactableObject.transform.name == comboBtns[i].transform.name)
+                {
+                    userInputTxt.text += i.ToString();
+                    inputValues[btnPresses] = i;
+                }
+                else
+                {
+                    comboBtns[i].ResetColor();
+                }
             }
-            else
+            btnPresses++;
+            if (btnPresses == maxBtnPresses)
             {
-                comboBtns[i].ResetColor();
+                CheckCombo();
             }
         }
+    }
+
+    private void CheckCombo()
+    {
+        int matches = 0;
+        for (int i = 0; i < comboValues.Length; i++)
+        {
+            if (comboValues[i] == inputValues[i])
+            {
+                matches++;
+            }
+        }
+        if (matches ==maxBtnPresses)
+        {
+            isLocked = false;
+            lockedPanel.color = unlockedColor;
+            lockedText.text = unlockedText;
+        }
+        else
+        {
+            ResetUserValues();
+        }
+    }
+
+    private void ResetUserValues()
+    {
+        inputValues = new int[comboValues.Length];
+        userInputTxt.text = "";
+        btnPresses = 0;
     }
 }
