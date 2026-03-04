@@ -25087,6 +25087,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  positionLimits: {x: 0, y: 0, z: 0}
   isLocked: 0
 --- !u!23 &1301667323
 MeshRenderer:
@@ -46632,8 +46633,9 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  positionLimits: {x: 0.15, y: 0.03, z: 0.15}
   isLocked: 1
-  comboLock: {fileID: 0}
+  comboLock: {fileID: 211105779}
   doorObject: {fileID: 4293244893369477262}
   rotationLimits: {x: 15, y: 0, z: 0}
 --- !u!4 &7274417831222778506
@@ -47734,8 +47736,9 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+  positionLimits: {x: 0.15, y: 0.03, z: 0.15}
   isLocked: 1
-  comboLock: {fileID: 0}
+  comboLock: {fileID: 211105779}
   doorObject: {fileID: 6097707996955532611}
   rotationLimits: {x: 15, y: 0, z: 0}
 --- !u!1 &8474882353325907643
