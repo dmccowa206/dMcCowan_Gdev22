@@ -46635,6 +46635,7 @@ MonoBehaviour:
   isLocked: 1
   comboLock: {fileID: 0}
   doorObject: {fileID: 4293244893369477262}
+  rotationLimits: {x: 15, y: 0, z: 0}
 --- !u!4 &7274417831222778506
 Transform:
   m_ObjectHideFlags: 0
@@ -47736,6 +47737,7 @@ MonoBehaviour:
   isLocked: 1
   comboLock: {fileID: 0}
   doorObject: {fileID: 6097707996955532611}
+  rotationLimits: {x: 15, y: 0, z: 0}
 --- !u!1 &8474882353325907643
 GameObject:
   m_ObjectHideFlags: 0

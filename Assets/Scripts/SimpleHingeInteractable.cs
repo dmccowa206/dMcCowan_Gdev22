@@ -8,6 +8,8 @@ public class SimpleHingeInteractable : XRSimpleInteractable
 {
     private Transform grabHand;
     [SerializeField] bool isLocked;
+    private const string Default_Layer = "Default";
+    private const string Grab_Layer = "Grab";
     void Start()
     {
     }
@@ -30,6 +32,15 @@ public class SimpleHingeInteractable : XRSimpleInteractable
     {
         base.OnSelectExited(args);
         grabHand = null;
+        ChangeLayerMask(Grab_Layer);
+    }
+    public void ReleaseHinge()
+    {
+        ChangeLayerMask(Default_Layer);
+    }
+    private void ChangeLayerMask(string mask)
+    {
+        interactionLayers = InteractionLayerMask.GetMask(mask);
     }
     public void UnlockHinge()
     {
