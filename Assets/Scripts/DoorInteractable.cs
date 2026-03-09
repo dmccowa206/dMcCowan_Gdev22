@@ -1,10 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorInteractable : SimpleHingeInteractable
 {
+    public UnityEvent OnOpen; 
     [SerializeField] CombinationLock comboLock;
     [SerializeField] Transform doorObject;
     [SerializeField] Vector3 rotationLimits;
@@ -19,11 +19,7 @@ public class DoorInteractable : SimpleHingeInteractable
     {
         base.Start();
         startRotation = transform.localEulerAngles;
-        startAngleX = startRotation.x;
-        if (startAngleX >= 180)
-        {
-            startAngleX -= 360;
-        }
+        startAngleX = GetAngle(startRotation.x);
         if (comboLock != null)
         {
             comboLock.UnlockAction += OnUnlocked;
@@ -56,6 +52,7 @@ public class DoorInteractable : SimpleHingeInteractable
         else if(isOpen)
         {
             transform.localEulerAngles = endRotation;
+            OnOpen.Invoke();
         }
         else
         {
@@ -91,14 +88,18 @@ public class DoorInteractable : SimpleHingeInteractable
     {
         isClosed = false;
         isOpen = false;
-        float localAngleX = transform.localEulerAngles.x;
-        if (localAngleX >= 180)
-        {
-            localAngleX -= 360;
-        }
+        float localAngleX = GetAngle(transform.localEulerAngles.x);
         if (localAngleX >= startAngleX + rotationLimits.x || localAngleX <= startAngleX - rotationLimits.x)
         {
             ReleaseHinge();
         }
+    }
+    private float GetAngle(float angle)
+    {
+        if (angle >= 180)
+        {
+            angle -= 360;
+        }
+        return angle;
     }
 }
