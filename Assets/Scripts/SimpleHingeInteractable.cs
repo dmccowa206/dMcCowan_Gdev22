@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class SimpleHingeInteractable : XRSimpleInteractable
+public abstract class SimpleHingeInteractable : XRSimpleInteractable
 {
     [SerializeField] Vector3 positionLimits;
     private Transform grabHand;
@@ -15,6 +15,7 @@ public class SimpleHingeInteractable : XRSimpleInteractable
     [SerializeField] bool isLocked;
     private const string Default_Layer = "Default";
     private const string Grab_Layer = "Grab";
+    protected abstract void ResetHinge();
     protected virtual void Start()
     {
         hingeCollider = GetComponent<Collider>();
@@ -39,6 +40,7 @@ public class SimpleHingeInteractable : XRSimpleInteractable
         base.OnSelectExited(args);
         grabHand = null;
         ChangeLayerMask(Grab_Layer);
+        ResetHinge();
     }
     private void TrackHand()
     {
