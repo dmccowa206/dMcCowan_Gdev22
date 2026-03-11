@@ -6,15 +6,24 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TheWall : MonoBehaviour
 {
+    [SerializeField] GameObject wallCubePrefab;
+    [SerializeField] GameObject socketCubePrefab;
     [SerializeField] XRSocketInteractor wallSocket;
     [SerializeField] GameObject[] wallCubes;
+    [SerializeField] float cubeSpacing = 0.05f;
+    private Vector3 cubeSize, spawnPosition;
     void Start()
     {
-        if (wallSocket != null)
+        if (wallCubePrefab != null)
         {
-            wallSocket.selectEntered.AddListener(OnSocketEnter);
-            wallSocket.selectEntered.AddListener(OnSocketExit);
+            cubeSize = wallCubePrefab.GetComponent<Renderer>().bounds.size;
         }
+        spawnPosition = transform.position;
+        BuildWall();
+    }
+    void Update()
+    {
+        
     }
     private void OnSocketEnter(SelectEnterEventArgs arg0)
     {
@@ -38,8 +47,30 @@ public class TheWall : MonoBehaviour
             }
         }
     }
-    void Update()
+    private void BuildWall()
     {
-        
+        wallCubes = new GameObject[2];
+        if (wallCubePrefab != null)
+        {
+            wallCubes[0] = Instantiate(wallCubePrefab, spawnPosition, transform.rotation, gameObject.transform);
+        }
+        spawnPosition.y += cubeSize.y + cubeSpacing;
+        if(socketCubePrefab != null)
+        {
+            wallCubes[1] = Instantiate(socketCubePrefab, spawnPosition, transform.rotation, gameObject.transform);
+            wallSocket = wallCubes[0].GetComponentInChildren<XRSocketInteractor>();
+            if (wallSocket != null)
+            {
+                wallSocket.selectEntered.AddListener(OnSocketEnter);
+                wallSocket.selectEntered.AddListener(OnSocketExit);
+            }
+        }
+        // for (int i = 0; i < wallCubes.Length; i++)
+        // {
+        //     if (wallCubes[i] != null)
+        //     {
+        //         wallCubes[i].transform.SetParent(transform);
+        //     }
+        // }
     }
 }
