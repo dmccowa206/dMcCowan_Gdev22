@@ -13,6 +13,7 @@ public class TheWall : MonoBehaviour
     [SerializeField] GameObject socketCubePrefab;
     [SerializeField] int socketPosition = 1;
     [SerializeField] XRSocketInteractor wallSocket;
+    [SerializeField] ExplosiveDevice explosive;
     [SerializeField] List<GeneratedColumn> generatedColumn;
     private GameObject[] wallCubes;
     [SerializeField] float cubeSpacing = 0.05f;
@@ -25,6 +26,10 @@ public class TheWall : MonoBehaviour
         {
             wallSocket.selectEntered.AddListener(OnSocketEnter);
             wallSocket.selectEntered.AddListener(OnSocketExit);
+        }
+        if(explosive != null)
+        {
+            explosive.OnDetonated.AddListener(OnDestroyWall);
         }
     }
     void Update()
@@ -70,15 +75,13 @@ public class TheWall : MonoBehaviour
     }
     private void OnSocketEnter(SelectEnterEventArgs arg0)
     {
-        int power = Random.Range(maxPower/2, maxPower);
         if(generatedColumn.Count >= 1)
         {
             for (int i = 0; i < generatedColumn.Count; i++)
             {
-                generatedColumn[i].DestroyColumn(power);
+                generatedColumn[i].ActivateColumn();
             }
         }
-        OnDestroy?.Invoke();
     }
     private void OnSocketExit(SelectEnterEventArgs arg0)
     {
@@ -135,6 +138,18 @@ public class TheWall : MonoBehaviour
         }
         generatedColumn.Add(tempColumn);
         spawnPosition.y = transform.position.y;
+    }
+    private void OnDestroyWall()
+    {
+        if(generatedColumn.Count >= 1)
+        {
+            for (int i = 0; i < generatedColumn.Count; i++)
+            {
+                int power = Random.Range(maxPower/2, maxPower);
+                generatedColumn[i].DestroyColumn(power);
+            }
+        }
+        OnDestroy?.Invoke();
     }
 }
 [System.Serializable]
@@ -211,6 +226,18 @@ public class GeneratedColumn
                 wallCubes[i].transform.SetParent(parentObject);
                 power = 2000;
                 rb.AddRelativeForce(Random.onUnitSphere * power);
+            }
+        }
+    }
+    public void ActivateColumn()
+    {
+        for (int i = 0; i < wallCubes.Length; i++)
+        {
+            if(wallCubes[i] != null)
+            {
+                Rigidbody rb = wallCubes[i].GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.None;
             }
         }
     }
