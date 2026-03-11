@@ -30,11 +30,36 @@ public class TheWall : MonoBehaviour
         if(deleteWall)
         {
             deleteWall = false;
+            for(int i = 0; i < generatedColumn.Count; i++)
+            {
+                generatedColumn[i].DeleteColumn();
+            }
+            if (generatedColumn.Count >= 1)
+            {
+                generatedColumn.Clear();
+            }
         }
         if(destroyWall)
         {
             destroyWall = false;
         }
+    }
+    private void AddSocketWall(GeneratedColumn socketedColumn)
+    {
+            if (wallCubes[socketPosition] != null)
+            {
+                Vector3 socketSpawnPos = wallCubes[socketPosition].transform.position;
+                DestroyImmediate(wallCubes[socketPosition]);
+                wallCubes[socketPosition] = Instantiate(socketCubePrefab, socketSpawnPos, transform.rotation, gameObject.transform);
+                socketedColumn.SetCube(wallCubes[socketPosition]);
+                wallSocket = wallCubes[socketPosition].GetComponentInChildren<XRSocketInteractor>();
+                if (wallSocket != null)
+                {
+                    wallSocket.selectEntered.AddListener(OnSocketEnter);
+                    wallSocket.selectEntered.AddListener(OnSocketExit);
+                }
+                
+            }
     }
     private void OnSocketEnter(SelectEnterEventArgs arg0)
     {
@@ -99,20 +124,7 @@ public class TheWall : MonoBehaviour
             {
                 socketPosition = 0;
             }
-            if (wallCubes[socketPosition] != null)
-            {
-                Vector3 socketSpawnPos = wallCubes[socketPosition].transform.position;
-                DestroyImmediate(wallCubes[socketPosition]);
-                wallCubes[socketPosition] = Instantiate(socketCubePrefab, socketSpawnPos, transform.rotation, gameObject.transform);
-                tempColumn.SetCube(wallCubes[socketPosition]);
-                wallSocket = wallCubes[socketPosition].GetComponentInChildren<XRSocketInteractor>();
-                if (wallSocket != null)
-                {
-                    wallSocket.selectEntered.AddListener(OnSocketEnter);
-                    wallSocket.selectEntered.AddListener(OnSocketExit);
-                }
-                
-            }
+            AddSocketWall(tempColumn);
         }
         generatedColumn.Add(tempColumn);
         spawnPosition.y = transform.position.y;
@@ -153,5 +165,16 @@ public class GeneratedColumn
                 break;
             }
         }
+    }
+    public void DeleteColumn()
+    {
+        for (int i = 0; i< wallCubes.Length; i++)
+        {
+            if(wallCubes[i] != null)
+            {
+                Object.DestroyImmediate(wallCubes[i]);
+            }
+        }
+        wallCubes = new GameObject[0];
     }
 }
