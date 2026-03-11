@@ -1,4 +1,5 @@
 
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -11,14 +12,20 @@ public class TheWall : MonoBehaviour
     [SerializeField] GameObject wallCubePrefab;
     [SerializeField] GameObject socketCubePrefab;
     [SerializeField] int socketPosition = 1;
-    private XRSocketInteractor wallSocket;
+    [SerializeField] XRSocketInteractor wallSocket;
     [SerializeField] List<GeneratedColumn> generatedColumn;
     private GameObject[] wallCubes;
     [SerializeField] float cubeSpacing = 0.05f;
     private Vector3 cubeSize, spawnPosition;
     [SerializeField] bool buildWall, deleteWall, destroyWall;
+    [SerializeField] int maxPower;
     void Start()
     {
+        if (wallSocket != null)
+        {
+            wallSocket.selectEntered.AddListener(OnSocketEnter);
+            wallSocket.selectEntered.AddListener(OnSocketExit);
+        }
     }
     void Update()
     {
@@ -63,23 +70,22 @@ public class TheWall : MonoBehaviour
     }
     private void OnSocketEnter(SelectEnterEventArgs arg0)
     {
-        for (int i = 0; i < wallCubes.Length; i++)
+        int power = Random.Range(maxPower/2, maxPower);
+        if(generatedColumn.Count >= 1)
         {
-            if(wallCubes[i] != null)
+            for (int i = 0; i < generatedColumn.Count; i++)
             {
-                Rigidbody rb = wallCubes[i].GetComponent<Rigidbody>();
-                rb.isKinematic = false;
+                generatedColumn[i].DestroyColumn(power);
             }
         }
     }
     private void OnSocketExit(SelectEnterEventArgs arg0)
     {
-        for (int i = 0; i < wallCubes.Length; i++)
+        if(generatedColumn.Count >= 1)
         {
-            if(wallCubes[i] != null)
+            for (int i = 0; i < generatedColumn.Count; i++)
             {
-                Rigidbody rb = wallCubes[i].GetComponent<Rigidbody>();
-                rb.isKinematic = true;
+                generatedColumn[i].ResetColumn();
             }
         }
     }
@@ -95,19 +101,19 @@ public class TheWall : MonoBehaviour
         {
             if (i == socketedColumn)
             {
-                GenerateColumn(rows, true);
+                GenerateColumn(i, rows, true);
             }
             else
             {
-                GenerateColumn(rows, false);
+                GenerateColumn(i, rows, false);
             }
             spawnPosition.x += cubeSize.x + cubeSpacing;
         }
     }
-    private void GenerateColumn(int height, bool socketed)
+    private void GenerateColumn(int index, int height, bool socketed)
     {
         GeneratedColumn tempColumn = new GeneratedColumn();
-        tempColumn.InitializeColumn(transform, height, socketed);
+        tempColumn.InitializeColumn(transform, index, height, socketed);
         wallCubes = new GameObject[height];
         for (int i = 0; i < wallCubes.Length; i++)
         {
@@ -135,11 +141,14 @@ public class GeneratedColumn
 {
     [SerializeField] GameObject[] wallCubes;
     [SerializeField] bool isSocketed;
+    [SerializeField] int columnIndex;
     private bool isParented;
     private Transform parentObject, columnObject;
     private const string Column_Name = "Column";
-    public void InitializeColumn(Transform parent, int rows, bool socketed)
+    private const string Socketed_Column_Name = "Socketed Column";
+    public void InitializeColumn(Transform parent, int index, int rows, bool socketed)
     {
+        columnIndex = index;
         parentObject = parent;
         wallCubes = new GameObject[rows];
         isSocketed = socketed;
@@ -151,7 +160,7 @@ public class GeneratedColumn
             if (!isParented)
             {
                 isParented = true;
-                cube.name = Column_Name;
+                SetColumnName(cube, columnIndex);
                 cube.transform.SetParent(parentObject);
                 columnObject = cube.transform;
             }
@@ -166,6 +175,18 @@ public class GeneratedColumn
             }
         }
     }
+    private void SetColumnName(GameObject column, int index)
+    {
+        if(isSocketed)
+        {
+            column.name = Socketed_Column_Name;
+        }
+        else
+        {
+            column.name = Column_Name;
+        }
+        column.name += index.ToString();
+    }
     public void DeleteColumn()
     {
         for (int i = 0; i< wallCubes.Length; i++)
@@ -176,5 +197,31 @@ public class GeneratedColumn
             }
         }
         wallCubes = new GameObject[0];
+    }
+    public void DestroyColumn(int power)
+    {
+        for (int i = 0; i < wallCubes.Length; i++)
+        {
+            if(wallCubes[i] != null)
+            {
+                Rigidbody rb = wallCubes[i].GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.None;
+                wallCubes[i].transform.SetParent(parentObject);
+                power = 2000;
+                rb.AddRelativeForce(Random.onUnitSphere * power);
+            }
+        }
+    }
+    public void ResetColumn()
+    {
+        for (int i = 0; i < wallCubes.Length; i++)
+        {
+            if(wallCubes[i] != null)
+            {
+                Rigidbody rb = wallCubes[i].GetComponent<Rigidbody>();
+                rb.isKinematic = true;
+            }
+        }
     }
 }
