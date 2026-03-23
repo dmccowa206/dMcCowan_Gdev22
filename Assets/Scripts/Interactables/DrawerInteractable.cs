@@ -9,6 +9,7 @@ public class DrawerInteractable : XRGrabInteractable
 {
     [SerializeField] Transform drawerTransform;
     [SerializeField] XRSocketInteractor keySocket;
+    public XRSocketInteractor GetKeySocket => keySocket;
     [SerializeField] GameObject keyIndicatorLight;
     [SerializeField] bool isLocked;
     private Transform parentTransform;
@@ -20,6 +21,8 @@ public class DrawerInteractable : XRGrabInteractable
     [SerializeField] private Vector3 limitDistances = new Vector3(0.2f, 0.2f, 0f);
     [SerializeField] AudioClip drawerMoveClip;
     public AudioClip GetDrawerMoveClip => drawerMoveClip;
+    [SerializeField] AudioClip socketedClip;
+    public AudioClip GetSocketedClip => socketedClip;
     void Start()
     {
         if (keySocket !=  null)

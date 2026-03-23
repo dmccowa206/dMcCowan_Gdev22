@@ -2271,11 +2271,17 @@ MonoBehaviour:
   grabActivatedClip: {fileID: 8300000, guid: a7d20e9f23bd7cc449823e482e098902, type: 3}
   wandActivatedClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
   drawer: {fileID: 7529789953156034592}
+  drawerSocket: {fileID: 0}
   drawerSound: {fileID: 0}
+  drawerSocketSound: {fileID: 0}
   drawerMoveClip: {fileID: 0}
+  drawerSocketClip: {fileID: 0}
   wall: {fileID: 1197758245}
-  wallSource: {fileID: 271382548}
+  wallSocket: {fileID: 0}
+  wallSound: {fileID: 0}
+  wallSocketSound: {fileID: 0}
   destroyWallClip: {fileID: 0}
+  wallSocketClip: {fileID: 0}
   fallbackClip: {fileID: 0}
 --- !u!1001 &84164855
 PrefabInstance:
@@ -40080,6 +40086,7 @@ MonoBehaviour:
   destroyWall: 0
   maxPower: 5000
   destroyWallClip: {fileID: 8300000, guid: 966117de60fa8db4a9fc27cd9f180bba, type: 3}
+  socketClip: {fileID: 8300000, guid: c9fc3770f1622e74ea1ddef4c58cd339, type: 3}
 --- !u!4 &1197758246
 Transform:
   m_ObjectHideFlags: 0
@@ -77594,6 +77601,7 @@ MonoBehaviour:
   drawerLimitZ: 0.782
   limitDistances: {x: 0.1, y: 0.1, z: 0}
   drawerMoveClip: {fileID: 8300000, guid: 5a473077dfada7641998c47c8e78f28e, type: 3}
+  socketedClip: {fileID: 8300000, guid: 256bdb10da09c744f86381dce72934e6, type: 3}
 --- !u!1 &7584415455688622982
 GameObject:
   m_ObjectHideFlags: 0

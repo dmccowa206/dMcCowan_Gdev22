@@ -15,12 +15,14 @@ public class XRAudioManager : MonoBehaviour
     [SerializeField] AudioClip grabActivatedClip, wandActivatedClip;
     [Header("Drawer Interactable")]
     [SerializeField] DrawerInteractable drawer;
-    [SerializeField] AudioSource drawerSound;
-    [SerializeField] AudioClip drawerMoveClip;
+    [SerializeField] XRSocketInteractor drawerSocket;
+    [SerializeField] AudioSource drawerSound, drawerSocketSound;
+    [SerializeField] AudioClip drawerMoveClip, drawerSocketClip;
     [Header("The Wall")]
     [SerializeField] TheWall wall;
-    [SerializeField] AudioSource wallSound;
-    [SerializeField] AudioClip destroyWallClip;
+    [SerializeField] XRSocketInteractor wallSocket;
+    [SerializeField] AudioSource wallSound, wallSocketSound;
+    [SerializeField] AudioClip destroyWallClip, wallSocketClip;
     [SerializeField] private AudioClip fallbackClip;
     private const string FALLBACKCLIP_NAME = "fallbackClip";
 
@@ -62,19 +64,38 @@ public class XRAudioManager : MonoBehaviour
     {
             drawerSound = drawer.transform.AddComponent<AudioSource>();
             drawerMoveClip = drawer.GetDrawerMoveClip;
-            CheckClip(drawerMoveClip);
+            CheckClip(ref drawerMoveClip);
             drawerSound.clip = drawerMoveClip;
             drawerSound.loop = true;
             drawer.selectEntered.AddListener(OnDrawerMove);
             drawer.selectExited.AddListener(OnDrawerStop);
+            drawerSocket = drawer.GetKeySocket;
+            if (drawerSocket != null)
+        {
+            drawerSocketSound = drawerSocket.transform.AddComponent<AudioSource>();
+            drawerSocketClip = drawer.GetSocketedClip;
+            CheckClip(ref drawerSocketClip);
+            drawerSocketSound.clip = drawerSocketClip;
+            drawerSocket.selectEntered.AddListener(OnDrawerSocketed);
+        }
     }
     private void SetWall()
     {
             destroyWallClip = wall.GetDestroyClip;
-            CheckClip(destroyWallClip);
+            CheckClip(ref destroyWallClip);
             wall.OnDestroy.AddListener(OnDestroyWall);
+            wallSocket = wall.GetWallSocket;
+            if (wallSocket != null)
+        {
+            wallSocketSound = wallSocket.transform.AddComponent<AudioSource>();
+            wallSocketClip = wall.GetSocketClip;
+            CheckClip(ref wallSocketClip);
+            wallSocketSound.clip = wallSocketClip;
+            wallSocket.selectEntered.AddListener(OnWallSocketed);
+        }
     }
-    private void CheckClip(AudioClip clip)
+
+    private void CheckClip(ref AudioClip clip)
     {
         if(clip == null)
         {
@@ -121,11 +142,19 @@ public class XRAudioManager : MonoBehaviour
     {
         drawerSound.Stop();
     }
+    private void OnDrawerSocketed(SelectEnterEventArgs arg0)
+    {
+        drawerSocketSound.Play();
+    }
     private void OnDestroyWall()
     {
         if (wallSound != null)
         {
             wallSound.Play();
         }
+    }
+    private void OnWallSocketed(SelectEnterEventArgs arg0)
+    {
+        wallSocketSound.Play();
     }
 }
