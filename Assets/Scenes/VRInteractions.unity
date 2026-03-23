@@ -2270,6 +2270,9 @@ MonoBehaviour:
   activatedSound: {fileID: 1218481912}
   grabActivatedClip: {fileID: 8300000, guid: a7d20e9f23bd7cc449823e482e098902, type: 3}
   wandActivatedClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
+  drawer: {fileID: 7529789953156034592}
+  drawerSound: {fileID: 0}
+  drawerMoveClip: {fileID: 0}
   wall: {fileID: 1197758245}
   wallSource: {fileID: 271382548}
   destroyWallClip: {fileID: 0}
@@ -77590,6 +77593,7 @@ MonoBehaviour:
   isLocked: 1
   drawerLimitZ: 0.782
   limitDistances: {x: 0.1, y: 0.1, z: 0}
+  drawerMoveClip: {fileID: 8300000, guid: 5a473077dfada7641998c47c8e78f28e, type: 3}
 --- !u!1 &7584415455688622982
 GameObject:
   m_ObjectHideFlags: 0
