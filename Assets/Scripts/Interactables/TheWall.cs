@@ -20,6 +20,8 @@ public class TheWall : MonoBehaviour
     private Vector3 cubeSize, spawnPosition;
     [SerializeField] bool buildWall, deleteWall, destroyWall;
     [SerializeField] int maxPower;
+    [SerializeField] AudioClip destroyWallClip;
+    public AudioClip GetDestroyClip => destroyWallClip;
     void Start()
     {
         if (wallSocket != null)
