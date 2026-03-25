@@ -2271,22 +2271,12 @@ MonoBehaviour:
   grabActivatedClip: {fileID: 8300000, guid: a7d20e9f23bd7cc449823e482e098902, type: 3}
   wandActivatedClip: {fileID: 8300000, guid: 79f0548b92e2b2c48a00514b4f9aa04a, type: 3}
   drawer: {fileID: 7529789953156034592}
-  drawerSocket: {fileID: 0}
-  drawerSound: {fileID: 0}
-  drawerSocketSound: {fileID: 0}
-  drawerMoveClip: {fileID: 0}
-  drawerSocketClip: {fileID: 0}
   cabinetDoors:
   - {fileID: 7232470888264782175}
   - {fileID: 8471264457464783773}
-  cabinetDoorSound: []
-  cabinetDoorMoveClip: {fileID: 0}
+  comboLock: {fileID: 211105779}
   wall: {fileID: 1197758245}
-  wallSocket: {fileID: 0}
-  wallSound: {fileID: 0}
-  wallSocketSound: {fileID: 0}
-  destroyWallClip: {fileID: 0}
-  wallSocketClip: {fileID: 0}
+  wallSound: {fileID: 271382548}
   fallbackClip: {fileID: 0}
 --- !u!1001 &84164855
 PrefabInstance:
@@ -6377,6 +6367,9 @@ MonoBehaviour:
   isResettable: 1
   comboValues: 070000000400000003000000
   inputValues: 
+  comboLockClip: {fileID: 8300000, guid: c7c0e401ba8e5db44a68513cf97e0ed7, type: 3}
+  comboUnlockClip: {fileID: 8300000, guid: dff3014fa4e23374685962fafb39949f, type: 3}
+  comboButtonPressClip: {fileID: 8300000, guid: 31dffdeda75f3794fa0e74ef11c93e26, type: 3}
 --- !u!114 &211105780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9632,7 +9625,7 @@ Transform:
   m_GameObject: {fileID: 271382546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.09, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
