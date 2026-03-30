@@ -21,6 +21,7 @@ public class XRAudioManager : MonoBehaviour
     XRPhysicsButtonInteractable drawerPhysicsButton;
     AudioSource drawerSound, drawerSocketSound;
     AudioClip drawerMoveClip, drawerSocketClip;
+    private bool isDetached;
     [Header("Door Interactable")]
     [SerializeField] SimpleHingeInteractable[] cabinetDoors = new SimpleHingeInteractable[2];
     AudioSource[] cabinetDoorSound;
@@ -251,8 +252,7 @@ public class XRAudioManager : MonoBehaviour
 
     private void OnSelectExitedGrabbable(SelectExitEventArgs arg0)
     {
-        grabSound.clip = grabClip;
-        grabSound.Play();
+        PlayGrabSound();
     }
     private void OnActivatedGrabbable(ActivateEventArgs arg0)
     {
@@ -274,11 +274,19 @@ public class XRAudioManager : MonoBehaviour
 
     private void OnDrawerMove(SelectEnterEventArgs arg0)
     {
-        drawerSound.Play();
+        if (isDetached)
+        {
+            PlayGrabSound();
+        }
+        else
+        {
+            drawerSound.Play();
+        }
     }
 
     private void OnDrawerDetach()
     {
+        isDetached = true;
         drawerSound.Stop();
     }
     private void OnPhysicsButtonEnter()
@@ -288,8 +296,7 @@ public class XRAudioManager : MonoBehaviour
     }
     private void OnPhysicsButtonExit()
     {
-        grabSound.clip = grabClip;
-        grabSound.Play();
+        PlayGrabSound();
     }
     private void OnDrawerSocketed(SelectEnterEventArgs arg0)
     {
@@ -340,5 +347,10 @@ public class XRAudioManager : MonoBehaviour
     private void OnWallSocketed(SelectEnterEventArgs arg0)
     {
         wallSocketSound.Play();
+    }
+    private void PlayGrabSound()
+    {
+        grabSound.clip = grabClip;
+        grabSound.Play();
     }
 }

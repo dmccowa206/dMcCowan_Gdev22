@@ -24,8 +24,10 @@ public class DrawerInteractable : XRGrabInteractable
     public AudioClip GetDrawerMoveClip => drawerMoveClip;
     [SerializeField] AudioClip socketedClip;
     public AudioClip GetSocketedClip => socketedClip;
+    private Rigidbody rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         if (keySocket !=  null)
         {
             keySocket.selectEntered.AddListener(OnDrawerUnlocked);
@@ -69,9 +71,16 @@ public class DrawerInteractable : XRGrabInteractable
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         base.OnSelectExited(args);
-        ChangeLayerMask(Grab_Layer);
-        isGrabbed = false;
-        transform.localPosition = drawerTransform.localPosition;
+        if(!isDetached)
+        {
+            ChangeLayerMask(Grab_Layer);
+            isGrabbed = false;
+            transform.localPosition = drawerTransform.localPosition;            
+        }
+        else
+        {
+            rb.isKinematic = false;
+        }
     }
     private void OnDrawerLocked(SelectExitEventArgs arg0)
     {
