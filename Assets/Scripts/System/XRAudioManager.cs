@@ -1,9 +1,14 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRAudioManager : MonoBehaviour
 {
+    [Header("Progress Control")]
+    [SerializeField] ProgressControl progCon;
+    [SerializeField] AudioSource progSound;
+    [SerializeField] AudioClip startGameClip, chalCompleteClip;
     [Header("Grab Interactables")]
     [SerializeField] XRGrabInteractable[] grabInteractables;
     [SerializeField] AudioSource grabSound;
@@ -30,11 +35,18 @@ public class XRAudioManager : MonoBehaviour
     AudioSource wallSocketSound;
     AudioClip destroyWallClip, wallSocketClip;
     [Header("Local Audio Settings")]
-    [SerializeField] private AudioClip fallbackClip;
+    [SerializeField] private AudioSource backgroundMusic;
+    [SerializeField] private AudioClip backgroundMusicClip, fallbackClip;
     private const string FALLBACKCLIP_NAME = "fallbackClip";
+    private bool startAudioBool;
 
     private void OnEnable()
     {
+        if (progCon != null)
+        {
+            progCon.OnStartGame.AddListener(StartGame);
+            progCon.OnChallengeComplete.AddListener(ChallengeComplete);
+        }
         if (fallbackClip == null)
         {
             fallbackClip = AudioClip.Create(FALLBACKCLIP_NAME, 1, 1, 1000, true);
@@ -59,6 +71,36 @@ public class XRAudioManager : MonoBehaviour
         if (wall != null)
         {
             SetWall();
+        }
+    }
+
+    private void ChallengeComplete(string arg0)
+    {
+        if(progSound != null && chalCompleteClip != null)
+        {
+            progSound.clip = chalCompleteClip;
+            progSound.Play();
+        }
+    }
+
+    private void StartGame(string arg0)
+    {
+        if (!startAudioBool)
+        {
+            startAudioBool = true;
+            if (backgroundMusic != null && backgroundMusicClip != null)
+            {
+                backgroundMusic.clip = backgroundMusicClip;
+                backgroundMusic.Play();
+            }
+        }
+        else
+        {
+            if(progSound != null && startGameClip != null)
+            {
+                progSound.clip = startGameClip;
+                progSound.Play();
+            }
         }
     }
 
