@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -7,32 +5,29 @@ using System;
 
 public class SimpleUIControl : MonoBehaviour
 {
-    [SerializeField] XRButtonInteractable startButton;
-    [SerializeField] GameObject keyIndicatorLight;
-    [SerializeField] string[] msgStrings;
+    [SerializeField] ProgressControl progCon;
     [SerializeField] TMP_Text[] msgTexts;
-    void Start()
-    {
-        if (startButton != null)
+    
+    void OnEnable() {
+        if (progCon != null)
         {
-            startButton.selectEntered.AddListener(StartButtonPressed);
-            if (keyIndicatorLight != null)
-            {
-                keyIndicatorLight.SetActive(true);
-            }
+            progCon.OnStartGame.AddListener(StartGame);
+            progCon.OnChallengeComplete.AddListener(ChallengeCompleted);
         }
     }
-
-    private void StartButtonPressed(SelectEnterEventArgs arg0)
-    {
-        SetText(msgStrings[1]);
-    }
-
     public void SetText(string msg)
     {
         for (int i=0; i < msgTexts.Length; i++)
         {
             msgTexts[i].text = msg;
         }
+    }
+    private void StartGame(string arg0)
+    {
+        SetText(arg0);
+    }
+    private void ChallengeCompleted(string arg0)
+    {
+        SetText(arg0);
     }
 }
