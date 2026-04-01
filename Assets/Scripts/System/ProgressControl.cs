@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
-using System;
 
 public class ProgressControl : MonoBehaviour
 {
@@ -18,6 +17,8 @@ public class ProgressControl : MonoBehaviour
     [SerializeField] TheWall wall;
     XRSocketInteractor wallSocket;
     [SerializeField] GameObject teleportAreas;
+    [Header("Library")]
+    [SerializeField] SimpleSliderControl librarySlider;
     [Header("Challenge Settings")]
     [SerializeField] string StartGameString;
     [SerializeField] string[] challengeStrings;
@@ -39,8 +40,11 @@ public class ProgressControl : MonoBehaviour
         {
             SetWall();
         }
+        if(librarySlider != null)
+        {
+            librarySlider.OnSliderActive.AddListener(LibrarySliderActive);
+        }
     }
-
 
     private void ChallengeComplete()
     {
@@ -114,6 +118,11 @@ public class ProgressControl : MonoBehaviour
         {
             teleportAreas.SetActive(true);
         }
+    }
+
+    private void LibrarySliderActive()
+    {
+        ChallengeComplete();
     }
 
 }

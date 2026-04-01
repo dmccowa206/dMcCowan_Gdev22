@@ -241,18 +241,17 @@ public class XRAudioManager : MonoBehaviour
     {
         if(arg0.interactableObject.transform.CompareTag("Key"))
         {
-            grabSound.clip = keyClip;
+            PlayGrabSound(keyClip);
         }
         else
         {
-            grabSound.clip = grabClip;
+            PlayGrabSound(grabClip);
         }
-        grabSound.Play();
     }
 
     private void OnSelectExitedGrabbable(SelectExitEventArgs arg0)
     {
-        PlayGrabSound();
+        PlayGrabSound(grabClip);
     }
     private void OnActivatedGrabbable(ActivateEventArgs arg0)
     {
@@ -276,7 +275,7 @@ public class XRAudioManager : MonoBehaviour
     {
         if (isDetached)
         {
-            PlayGrabSound();
+            PlayGrabSound(grabClip);
         }
         else
         {
@@ -291,12 +290,11 @@ public class XRAudioManager : MonoBehaviour
     }
     private void OnPhysicsButtonEnter()
     {
-        grabSound.clip = keyClip;
-        grabSound.Play();
+        PlayGrabSound(keyClip);
     }
     private void OnPhysicsButtonExit()
     {
-        PlayGrabSound();
+        PlayGrabSound(keyClip);
     }
     private void OnDrawerSocketed(SelectEnterEventArgs arg0)
     {
@@ -348,9 +346,9 @@ public class XRAudioManager : MonoBehaviour
     {
         wallSocketSound.Play();
     }
-    private void PlayGrabSound()
+    private void PlayGrabSound(AudioClip clip)
     {
-        grabSound.clip = grabClip;
+        grabSound.clip = clip;
         grabSound.Play();
     }
 }
