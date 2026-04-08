@@ -36,6 +36,14 @@ public class XRAudioManager : MonoBehaviour
     [SerializeField] AudioSource wallSound;
     AudioSource wallSocketSound;
     AudioClip destroyWallClip, wallSocketClip;
+    [Header("Joystick Interactable")]
+    [SerializeField] SimpleHingeInteractable joystick;
+    AudioSource joystickSound;
+    AudioClip joystickClip;
+    [Header("The Robot")]
+    [SerializeField] NavMeshRobot robot;
+    AudioSource destroyWallCubeSound;
+    AudioClip destroyWallCubeClip;
     [Header("Local Audio Settings")]
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioClip backgroundMusicClip, fallbackClip;
@@ -73,6 +81,14 @@ public class XRAudioManager : MonoBehaviour
         if (wall != null)
         {
             SetWall();
+        }
+        if(joystick != null)
+        {
+            SetJoystick();
+        }
+        if (robot != null)
+        {
+            SetRobot();
         }
     }
 
@@ -199,7 +215,22 @@ public class XRAudioManager : MonoBehaviour
             wallSocket.selectEntered.AddListener(OnWallSocketed);
         }
     }
-
+    private void SetJoystick()
+    {
+        joystickClip = joystick.GetHingeMoveClip;
+        joystickSound = joystick.transform.AddComponent<AudioSource>();
+        joystickSound.clip = joystickClip;
+        joystickSound.loop = true;
+        joystick.OnHingeSelected.AddListener(JoystickMove);
+        joystick.selectExited.AddListener(JoystickExited);
+    }
+    private void SetRobot()
+    {
+        destroyWallCubeSound = robot.transform.AddComponent<AudioSource>();
+        destroyWallCubeClip = robot.GetCollisionClip();
+        destroyWallCubeSound.clip = destroyWallCubeClip;
+        robot.OnDestroyWallCube.AddListener(OnDestroyWallCube);
+    }
     private void ChallengeComplete(string arg0)
     {
         if(progSound != null && chalCompleteClip != null)
@@ -345,6 +376,18 @@ public class XRAudioManager : MonoBehaviour
     private void OnWallSocketed(SelectEnterEventArgs arg0)
     {
         wallSocketSound.Play();
+    }
+    private void JoystickMove(SimpleHingeInteractable arg0)
+    {
+        joystickSound.Play();
+    }
+    private void JoystickExited(SelectExitEventArgs arg0)
+    {
+        joystickSound.Stop();
+    }
+    private void OnDestroyWallCube()
+    {
+        destroyWallCubeSound.Play();
     }
     private void PlayGrabSound(AudioClip clip)
     {

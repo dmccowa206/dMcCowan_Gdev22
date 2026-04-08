@@ -19,18 +19,22 @@ public class ProgressControl : MonoBehaviour
     [SerializeField] GameObject teleportAreas;
     [Header("Library")]
     [SerializeField] SimpleSliderControl librarySlider;
+    [Header("The Robot")]
+    [SerializeField] NavMeshRobot robot;
     [Header("Challenge Settings")]
-    [SerializeField] string StartGameString;
+    [SerializeField] string startGameString, endGameString;
     [SerializeField] string[] challengeStrings;
-    private bool startGameBool;
-    private int challengeNum;
+    [SerializeField] int wallCubeDestroyQuota;
+    private int wallCubesDestroyed;
+    private bool startGameBool, challengesCompleted;
+    [SerializeField] private int challengeNum;
     void Start()
     {
         if (startButton != null)
         {
             startButton.selectEntered.AddListener(StartButtonPressed);
         }
-        OnStartGame?.Invoke(StartGameString);
+        OnStartGame?.Invoke(startGameString);
         SetDrawerInteractable();
         if(comboLock != null)
         {
@@ -44,6 +48,10 @@ public class ProgressControl : MonoBehaviour
         {
             librarySlider.OnSliderActive.AddListener(LibrarySliderActive);
         }
+        if (robot != null)
+        {
+            robot.OnDestroyWallCube.AddListener(OnDestroyWallCube);
+        }
     }
 
     private void ChallengeComplete()
@@ -55,7 +63,7 @@ public class ProgressControl : MonoBehaviour
         }
         else if (challengeNum >= challengeStrings.Length)
         {
-            
+            OnChallengeComplete?.Invoke(endGameString);
         }
     }
     private void StartButtonPressed(SelectEnterEventArgs arg0)
@@ -117,6 +125,15 @@ public class ProgressControl : MonoBehaviour
         if(teleportAreas != null)
         {
             teleportAreas.SetActive(true);
+        }
+    }
+    private void OnDestroyWallCube()
+    {
+        wallCubesDestroyed++;
+        if (wallCubesDestroyed >= wallCubeDestroyQuota && !challengesCompleted)
+        {
+            challengesCompleted = true;
+            ChallengeComplete();
         }
     }
 
