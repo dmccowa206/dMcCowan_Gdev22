@@ -1120,6 +1120,17 @@
                 },
                 {
                     "name": "",
+                    "id": "298cc582-decd-454f-ac28-98d54492e6f2",
+                    "path": "<MetaAimHand>{LeftHand}/indexPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Generic XR Controller",
+                    "action": "Grab Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a46b49d0-0754-4dac-a9a5-a822e10751f2",
                     "path": "<XRController>{LeftHand}/{Primary2DAxis}",
                     "interactions": "Sector(directions=12,sweepBehavior=1),Sector(directions=2,sweepBehavior=2)",
@@ -1821,7 +1832,7 @@
                     "name": "Grab Move",
                     "type": "Button",
                     "id": "cfb29d37-3db0-4e5d-a73b-7d48a19e279e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1921,6 +1932,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
+                    "action": "Grab Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c28b9e49-042a-4a16-a306-709e95430a2e",
+                    "path": "<MetaAimHand>{RightHand}/indexPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Generic XR Controller",
                     "action": "Grab Move",
                     "isComposite": false,
                     "isPartOfComposite": false
