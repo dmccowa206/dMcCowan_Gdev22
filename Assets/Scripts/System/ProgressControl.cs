@@ -75,9 +75,67 @@ public class ProgressControl : MonoBehaviour
             {
                 keyIndicatorLight.SetActive(true);
             }
-            if (challengeNum < challengeStrings.Length)
+            if (challengeNum < challengeStrings.Length && challengeNum == 0)
             {
                 OnStartGame?.Invoke(challengeStrings[challengeNum]);
+            }
+        }
+    }
+    private void OnDrawerSocketed(SelectEnterEventArgs arg0)
+    {
+        if (challengeNum == 0)
+        {
+            ChallengeComplete();
+        }
+    }
+    private void OnDrawerDetach()
+    {
+        if (challengeNum == 1)
+        {
+            ChallengeComplete();
+        }
+    }
+    private void OnComboUnlocked()
+    {
+        if (challengeNum == 2)
+        {
+            ChallengeComplete();
+        }
+    }
+    private void OnWallSocketed(SelectEnterEventArgs arg0)
+    {
+        if (challengeNum == 3)
+        {
+            ChallengeComplete();
+        }
+    }
+    private void OnDestroyWall()
+    {
+        if (challengeNum == 4)
+        {
+            ChallengeComplete();
+        }
+        if(teleportAreas != null)
+        {
+            teleportAreas.SetActive(true);
+        }
+    }
+    private void LibrarySliderActive()
+    {
+        if (challengeNum == 5)
+        {
+            ChallengeComplete();
+        }
+    }
+    private void OnDestroyWallCube()
+    {
+        wallCubesDestroyed++;
+        if (wallCubesDestroyed >= wallCubeDestroyQuota && !challengesCompleted)
+        {
+            challengesCompleted = true;
+            if (challengeNum == 6)
+            {
+                ChallengeComplete();
             }
         }
     }
@@ -103,43 +161,6 @@ public class ProgressControl : MonoBehaviour
         }
     }
 
-    private void OnDrawerSocketed(SelectEnterEventArgs arg0)
-    {
-        ChallengeComplete();
-    }
-    private void OnDrawerDetach()
-    {
-        ChallengeComplete();
-    }
-    private void OnComboUnlocked()
-    {
-        ChallengeComplete();
-    }
-    private void OnWallSocketed(SelectEnterEventArgs arg0)
-    {
-        ChallengeComplete();
-    }
-    private void OnDestroyWall()
-    {
-        ChallengeComplete();
-        if(teleportAreas != null)
-        {
-            teleportAreas.SetActive(true);
-        }
-    }
-    private void OnDestroyWallCube()
-    {
-        wallCubesDestroyed++;
-        if (wallCubesDestroyed >= wallCubeDestroyQuota && !challengesCompleted)
-        {
-            challengesCompleted = true;
-            ChallengeComplete();
-        }
-    }
 
-    private void LibrarySliderActive()
-    {
-        ChallengeComplete();
-    }
 
 }
