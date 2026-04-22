@@ -33276,6 +33276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hand Menu With Button Activation
       objectReference: {fileID: 0}
+    - target: {fileID: 5030734267259534324, guid: e2698219e3231e94c8765d49b9dd5cff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5030734267259534325, guid: e2698219e3231e94c8765d49b9dd5cff, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -83290,8 +83294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d299502104b064388841ec2adf6def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_AimTargetObject: {fileID: 0}
+  m_Target: {fileID: 8348719900669812476}
+  m_AimTargetObject: {fileID: 3404034358897925732}
   m_UseLocalSpace: 1
   m_AngleStabilization: 5
   m_PositionStabilization: 0.03
@@ -84688,8 +84692,8 @@ MonoBehaviour:
   m_UseOptimizedControls: 0
   m_MetaQuestLeftHandMesh: {fileID: 1300862495122564788}
   m_MetaQuestRightHandMesh: {fileID: 3719348766982238509}
-  m_AndroidXRLeftHandMesh: {fileID: 0}
-  m_AndroidXRRightHandMesh: {fileID: 0}
+  m_AndroidXRLeftHandMesh: {fileID: 1300862495122564788}
+  m_AndroidXRRightHandMesh: {fileID: 3719348766982238509}
   m_HandMeshMaterial: {fileID: 0}
   m_DrawMeshes: 1
   m_DebugDrawPrefab: {fileID: 6507399986997092475, guid: 254b742d65a15d14b9df756ae77de868, type: 3}
@@ -85308,7 +85312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 3267306654775624477}
-  m_AimTargetObject: {fileID: 0}
+  m_AimTargetObject: {fileID: 1088675440}
   m_UseLocalSpace: 1
   m_AngleStabilization: 20
   m_PositionStabilization: 0.25
@@ -86770,7 +86774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GroupName: Left
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 183197651}
   m_StartingGroupMembers:
   - {fileID: 1229489481365689006}
   m_StartingInteractionOverridesMap:
@@ -90216,8 +90220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d299502104b064388841ec2adf6def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_AimTargetObject: {fileID: 0}
+  m_Target: {fileID: 8493118370999976319}
+  m_AimTargetObject: {fileID: 7541155399602653831}
   m_UseLocalSpace: 1
   m_AngleStabilization: 5
   m_PositionStabilization: 0.03
@@ -91280,7 +91284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 3464346776000428715}
-  m_AimTargetObject: {fileID: 0}
+  m_AimTargetObject: {fileID: 3404034358897925732}
   m_UseLocalSpace: 1
   m_AngleStabilization: 5
   m_PositionStabilization: 0.03
@@ -95013,7 +95017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 6077830410230799003}
-  m_AimTargetObject: {fileID: 0}
+  m_AimTargetObject: {fileID: 7541155399602653831}
   m_UseLocalSpace: 1
   m_AngleStabilization: 5
   m_PositionStabilization: 0.03
@@ -99368,7 +99372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GroupName: Right
-  m_InteractionManager: {fileID: 0}
+  m_InteractionManager: {fileID: 183197651}
   m_StartingGroupMembers:
   - {fileID: 3526145060551587511}
   m_StartingInteractionOverridesMap:
